@@ -1,0 +1,190 @@
+const canvas = document.getElementById('canvas1');
+const contexte = canvas.getContext('2d');
+let posGcanvas = canvas.offsetLeft;
+let posHcanvas = canvas.offsetTop;
+let current = 0;
+
+// Dessin du rectangle de chaque joueur
+
+contexte.fillStyle = '#F6F6F6';
+contexte.fillRect(0,0,625,570);
+contexte.fillStyle = '#FFF';
+contexte.fillRect(625,0,625,570);
+
+// ajout des textes player 1, player 2, New game, Roll Dice, Hold
+
+contexte.font = '30px Lato';
+contexte.fillStyle = 'black';
+contexte.fillText('PLAYER 1', 220, 150);
+contexte.font = '150 30px Lato';
+contexte.fillStyle = 'black';
+contexte.fillText('PLAYER 2', 880, 150);
+contexte.font = '300 15px Lato';
+contexte.fillStyle = 'black';
+contexte.fillText('NEW GAME', 600, 60);
+contexte.font = '300 15px Lato';
+contexte.fillStyle = 'black';
+contexte.fillText('ROLL DICE', 600, 420);
+contexte.font = '300 15px Lato';
+contexte.fillStyle = 'black';
+contexte.fillText('HOLD', 613, 490);
+
+// ajout des carrés contenants les scores CURRENT ainsi que des textes Current
+
+contexte.fillStyle = '#dd5151'
+contexte.fillRect(240, 420, 100, 70);
+contexte.fillStyle = '#dd5151'
+contexte.fillRect(900, 420, 100, 70);
+contexte.font = '300 11px Lato';
+contexte.fillStyle = 'black';
+contexte.fillText('CURRENT', 263, 442);
+contexte.font = '300 11px Lato';
+contexte.fillStyle = 'black';
+contexte.fillText('CURRENT', 923, 442);
+
+
+// fonction pour alert si je touche New Game
+
+canvas.addEventListener('click', pepe);
+
+function pepe(endroit){
+    let x = endroit.pageX - posGcanvas;
+    let y = endroit.pageY - posHcanvas;
+
+    // new game est a x=600 et y=60 dans le canvas
+
+    if (x > 600 && x < 700 && y > 50 && y < 70){
+        alert('salut');
+    }
+};
+
+// création des signes  de new game, roll dice, et hold
+
+contexte.beginPath();
+contexte.lineWidth = '1';
+contexte.strokeStyle = '#dd5151';
+contexte.arc(575, 55, 13, 0, 2*Math.PI);   // cercle de new game
+contexte.stroke();
+
+contexte.beginPath();
+contexte.lineWidth = '1';
+contexte.strokeStyle = '#dd5151';
+contexte.moveTo(566, 55);  // trait 1 de new game
+contexte.lineTo(584, 55);
+contexte.moveTo(575, 46);  // trait 2 de new game
+contexte.lineTo(575, 64);
+contexte.moveTo(565, 415); // fleche 1 de rolldice
+contexte.lineTo(561, 419);
+contexte.moveTo(565, 415);
+contexte.lineTo(570, 419);
+contexte.moveTo(585, 415); //fleche 2 de rolldice
+contexte.lineTo(580, 411);
+contexte.moveTo(585, 415);
+contexte.lineTo(588, 410);
+contexte.moveTo(589, 475); // trait de HOLD
+contexte.lineTo(589, 488);
+contexte.moveTo(589, 488); // fleche 1 de HOLD
+contexte.lineTo(585, 484);
+contexte.moveTo(589, 488); // fleche 2 de HOLD
+contexte.lineTo(593, 484);
+contexte.stroke();
+
+contexte.beginPath();
+contexte.lineWidth = '1';
+contexte.strokeStyle = '#dd5151';
+contexte.arc(575, 415, 10, 0.1*Math.PI, Math.PI);    //demi-cercle de rolldice
+contexte.stroke();
+
+contexte.beginPath();
+contexte.lineWidth = '1';
+contexte.strokeStyle = '#dd5151';
+contexte.arc(575, 415, 10, 1.1*Math.PI, 2*Math.PI);   //demi-cercle de rolldice
+contexte.stroke();
+
+
+contexte.lineWidth = '1';
+contexte.strokeStyle = '#dd5151';
+contexte.strokeRect(581, 479, 16, 16);  // carré de HOLD
+
+contexte.save();    // sauvegarde du canvas avant l'ajout d'ombre
+
+// création du dé à cliquer et de son ombre
+
+contexte.shadowColor = '#F1F1F1';
+contexte.shadowOffsetX = 10;
+contexte.shadowOffsetY = 10;
+contexte.shadowBlur = 20;
+contexte.fillStyle = 'white';
+contexte.fillRect(575, 190, 100, 100);
+
+// création des variables du score current, des variables du 
+// score Global, et de la condition qui permet que lorsque je clique
+// sur le dé, un score aléatoire entre 1 et 6 apparait dans current
+contexte.restore();
+
+let global = '';
+
+
+
+
+canvas.addEventListener('click', score);
+
+function erasescore(){   // qui permet que le score ne se superpose pas
+    contexte.fillStyle = '#dd5151'
+    contexte.fillRect(240, 420, 100, 70);
+    contexte.font = '300 11px Lato';
+    contexte.fillStyle = 'black';
+    contexte.fillText('CURRENT', 263, 442);
+};
+
+function drawscore(){       
+    contexte.font = '25px Lato';
+    contexte.fillStyle = 'white';
+    contexte.fillText(current, 275, 475);
+};
+
+function score(endroit2){
+    erasescore();
+    let x = endroit2.pageX - posGcanvas;
+    let y = endroit2.pageY - posHcanvas;
+    if (x > 475 && x < 675 && y > 180 && y < 280){
+    current = current + Math.ceil(Math.random()*6);
+    drawscore();
+    
+    }
+};
+
+    
+
+// si je clique sur HOLD le score de current va dans le global
+
+let hold = 0;
+
+function eraseglobalscore(){
+    contexte.fillStyle = '#F6F6F6';
+    contexte.fillRect(220, 200, 200, 200);
+};
+
+function drawglobalscore(){ 
+         
+    contexte.font = '200 50px Lato';
+    contexte.fillStyle = '#dd5151';
+    contexte.fillText(hold, 245, 250);
+};
+
+canvas.addEventListener('click', transfertHG);
+
+function transfertHG(endroit3){
+    let x = endroit3.pageX - posGcanvas;
+    let y = endroit3.pageY - posHcanvas;
+    if (x > 570 && x < 660 && y > 470 && y < 500 ){
+    hold = hold + current;
+    current = 0;
+    eraseglobalscore();
+    drawglobalscore();
+    }
+}
+
+// si 1 est tiré dans current alors c'est la variable 2 
+//du score current qui génère de manière aléatoire 
+// son chiffre en 1 et 6
