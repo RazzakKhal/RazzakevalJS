@@ -3,6 +3,7 @@ const contexte = canvas.getContext('2d');
 let posGcanvas = canvas.offsetLeft;
 let posHcanvas = canvas.offsetTop;
 let current = 0;
+let current2 = 0;
 
 // Dessin du rectangle de chaque joueur
 
@@ -127,7 +128,7 @@ let global = '';
 
 
 
-canvas.addEventListener('click', score);
+canvas.addEventListener('click', joueur1);
 
 function erasescore(){   // qui permet que le score ne se superpose pas
     contexte.fillStyle = '#dd5151'
@@ -137,21 +138,65 @@ function erasescore(){   // qui permet que le score ne se superpose pas
     contexte.fillText('CURRENT', 263, 442);
 };
 
-function drawscore(){       
+function drawscore(){       // fonction qui écrit dans Current 1
     contexte.font = '25px Lato';
     contexte.fillStyle = 'white';
     contexte.fillText(current, 275, 475);
 };
 
-function score(endroit2){
+function erasescore2(){   // qui permet que le score ne se superpose pas
+    contexte.fillStyle = '#dd5151'
+    contexte.fillRect(900, 420, 100, 70);
+    contexte.font = '300 11px Lato';
+    contexte.fillStyle = 'black';
+    contexte.fillText('CURRENT', 923, 442);
+};
+function drawscore2(){ // fonction qui écrit dans Current 2
+    contexte.font = '25px Lato';
+    contexte.fillStyle = 'black';
+    contexte.fillText(current2, 935, 475);
+};
+// fonction qui permet que les cliques aillent au joueur 2
+function joueur2(endroit4){
+    canvas.addEventListener('click', joueur2);
+    erasescore2();
+    let x = endroit4.pageX - posGcanvas;
+    let y = endroit4.pageY - posHcanvas;
+    let hasard = Math.floor(Math.random()*6 + 1);
+    if (x > 475 && x < 675 && y > 180 && y < 280 && hasard != 1 && current == 0){
+        
+        current2 = current2 + hasard;
+        drawscore2();
+        
+    }
+    else{
+        canvas.addEventListener('click', joueur1);
+        current2 = 0;
+        
+        
+       
+    }
+
+}
+
+function joueur1(endroit2){
+    
     erasescore();
     let x = endroit2.pageX - posGcanvas;
     let y = endroit2.pageY - posHcanvas;
-    if (x > 475 && x < 675 && y > 180 && y < 280){
-    current = current + Math.ceil(Math.random()*6);
-    drawscore();
+    let hasard = Math.floor(Math.random()*6 + 1);
+    if (x > 475 && x < 675 && y > 180 && y < 280 && hasard != 1 && current2 == 0){
     
+    current = current + hasard;
+    drawscore();
     }
+    else{
+        current = 0;
+        joueur2();
+    }
+    // introduction si 1 alors c'est au joueur 2
+    
+
 };
 
     
@@ -187,4 +232,10 @@ function transfertHG(endroit3){
 
 // si 1 est tiré dans current alors c'est la variable 2 
 //du score current qui génère de manière aléatoire 
+
+
 // son chiffre en 1 et 6
+
+
+
+//si global égal 100 le jeu est fini
