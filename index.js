@@ -7,6 +7,8 @@ let current2 = 0;
 let hold = 0;
 let hasard2 =0;
 let hasard3 =0;
+let hold2 = 0;
+let hasard4 = 0;
 
 
 // Dessin du rectangle de chaque joueur
@@ -50,18 +52,6 @@ contexte.fillText('CURRENT', 923, 442);
 
 // fonction pour alert si je touche New Game
 
-canvas.addEventListener('click', pepe);
-
-function pepe(endroit){
-    let x = endroit.pageX - posGcanvas;
-    let y = endroit.pageY - posHcanvas;
-
-    // new game est a x=600 et y=60 dans le canvas
-
-    if (x > 600 && x < 700 && y > 50 && y < 70){
-        alert('salut');
-    }
-};
 
 // création des signes  de new game, roll dice, et hold
 
@@ -131,8 +121,9 @@ contexte.restore();
 
 
 
-
 canvas.addEventListener('click', joueur1);
+
+
 
 function erasescore(){   // qui permet que le score ne se superpose pas
     contexte.fillStyle = '#dd5151'
@@ -162,62 +153,77 @@ function drawscore2(){ // fonction qui écrit dans Current 2
 };
 
 
+canvas.addEventListener('click', joueur1);
+
+
 // fonction qui permet que les cliques aillent au joueur 2
 function joueur2(endroit4){
-    canvas.addEventListener('click', joueur2);
+    canvas.removeEventListener('click', joueur2);
     erasescore2();
+    drawscore2();
     let x = endroit4.pageX - posGcanvas;
     let y = endroit4.pageY - posHcanvas;
     let hasard = Math.floor(Math.random()*6 + 1);
-    if (x > 475 && x < 675 && y > 180 && y < 280 && hasard != 1 && current == 0){
-        
-        current2 = current2 + hasard;
-        drawscore2();
-        return current2;
-        
-    }
-    else{
+    hasard5 = hasard;
+
+    if (x > 475 && x < 675 && y > 180 && y < 280 && hasard5 == 1){
+        hasard4 = 0;
         canvas.addEventListener('click', joueur1);
-        current2 = 0;
-        
-        
-       
+        return;
+
     }
+    else if (x > 475 && x < 675 && y > 180 && y < 280 && (hasard5 == 2 || hasard5 == 3 || hasard5 == 4 || hasard5 == 5 || hasard5 == 6)){
+        
+        current2 = current2 + hasard5;
+        hasard4 = current2;
+        canvas.addEventListener('click', joueur2);
+        return;
+         }
+
+    else{};
+
+    return 0;
 
 }
 
 function joueur1(endroit2){
-    
+    canvas.removeEventListener('click', joueur1);
     erasescore();
+    drawscore();
     let x = endroit2.pageX - posGcanvas;
     let y = endroit2.pageY - posHcanvas;
-    
-
     let hasard = Math.floor(Math.random()*6 + 1);
     hasard2 = hasard;
     
-    if (x > 475 && x < 675 && y > 180 && y < 280 && hasard != 1 && current2 == 0){
-    current = current + hasard2;
-    hasard3 = current;
-    drawscore();
-    }
+    if (hasard2 == 1){
+        hasard3 = 0;
+        canvas.addEventListener('click', joueur2);
+        return;
+          }
 
-    else{
-        current = 0;
-        joueur2();
-    }; 
-    
+    else if (x > 475 && x < 675 && y > 180 && y < 280 && (hasard2 == 2 || hasard2 == 3 || hasard2 == 4 || hasard2 == 5 || hasard2 == 6)){
+        
+        
+        current = current + hasard2;
+        hasard3 = current;
+        
+        canvas.addEventListener('click', joueur1);
+         }
+
+    else{};
 };
 
-canvas.addEventListener('click', transfertHold);
 
+
+canvas.addEventListener('click', transfertHold);
 
      function transfertHold(endroit3){
         let x = endroit3.pageX - posGcanvas;
         let y = endroit3.pageY - posHcanvas;
-        if (x > 570 && x < 660 && y > 470 && y < 500 ){
+        if (x > 570 && x < 660 && y > 470 && y < 500){
         let mucha = hasard3;
         hold = (hold + mucha);
+        hasard3 = 0;
         eraseglobalscore();
         drawglobalscore();
        }
@@ -237,15 +243,42 @@ function drawglobalscore(){ // fonction qui permet d'écrire le nouveau score de
 };
 
 
-
-// si je clique sur HOLD le score de current va dans le global
-
+// clique sur hold current 2 va dans son global2
 
 
+canvas.addEventListener('click', transfertHold2);
+function transfertHold2(endroit3){
+    let x = endroit3.pageX - posGcanvas;
+    let y = endroit3.pageY - posHcanvas;
+    if (x > 570 && x < 660 && y > 470 && y < 500){
+    let mucha2 = hasard4;
+    hold2 = (hold2 + mucha2);
+    hasard4 = 0;
+    eraseglobalscore2();
+    drawglobalscore2();
+   }
+}
 
 
+function eraseglobalscore2(){  //fonction qui permet de cacher le score précédent dans global2
+contexte.fillStyle = '#FFF';
+contexte.fillRect(920, 200, 200, 200);
+};
+
+function drawglobalscore2(){ // fonction qui permet d'écrire le nouveau score de global2
+     
+contexte.font = '200 50px Lato';
+contexte.fillStyle = '#dd5151';
+contexte.fillText(hold2, 945, 250);
+};
 
 
+// si global sscore 1 ou global score 2 = 100 alors alert fin du jeu et tout redeviens à 0
 
+// si hasard = 1 alors dé a un cercle, si hasard = 2 alors dé à 2 cercles ...
 
-//si global égal 100 le jeu est fini
+//si player 1 joue, cercle à coté de son nom, idem pour player 2
+
+// New game reinitialise tout
+
+// Si je suis au dessus d'une zone de clique la souris se transforme
