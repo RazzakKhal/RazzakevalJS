@@ -4,6 +4,10 @@ let posGcanvas = canvas.offsetLeft;
 let posHcanvas = canvas.offsetTop;
 let current = 0;
 let current2 = 0;
+let hold = 0;
+let hasard2 =0;
+let hasard3 =0;
+
 
 // Dessin du rectangle de chaque joueur
 
@@ -123,7 +127,7 @@ contexte.fillRect(575, 190, 100, 100);
 // sur le dé, un score aléatoire entre 1 et 6 apparait dans current
 contexte.restore();
 
-let global = '';
+
 
 
 
@@ -156,6 +160,8 @@ function drawscore2(){ // fonction qui écrit dans Current 2
     contexte.fillStyle = 'black';
     contexte.fillText(current2, 935, 475);
 };
+
+
 // fonction qui permet que les cliques aillent au joueur 2
 function joueur2(endroit4){
     canvas.addEventListener('click', joueur2);
@@ -167,6 +173,7 @@ function joueur2(endroit4){
         
         current2 = current2 + hasard;
         drawscore2();
+        return current2;
         
     }
     else{
@@ -184,57 +191,60 @@ function joueur1(endroit2){
     erasescore();
     let x = endroit2.pageX - posGcanvas;
     let y = endroit2.pageY - posHcanvas;
-    let hasard = Math.floor(Math.random()*6 + 1);
-    if (x > 475 && x < 675 && y > 180 && y < 280 && hasard != 1 && current2 == 0){
     
-    current = current + hasard;
+
+    let hasard = Math.floor(Math.random()*6 + 1);
+    hasard2 = hasard;
+    
+    if (x > 475 && x < 675 && y > 180 && y < 280 && hasard != 1 && current2 == 0){
+    current = current + hasard2;
+    hasard3 = current;
     drawscore();
     }
+
     else{
         current = 0;
         joueur2();
-    }
-    // introduction si 1 alors c'est au joueur 2
+    }; 
     
-
 };
 
+canvas.addEventListener('click', transfertHold);
+
+
+     function transfertHold(endroit3){
+        let x = endroit3.pageX - posGcanvas;
+        let y = endroit3.pageY - posHcanvas;
+        if (x > 570 && x < 660 && y > 470 && y < 500 ){
+        let mucha = hasard3;
+        hold = (hold + mucha);
+        eraseglobalscore();
+        drawglobalscore();
+       }
+    }
+
     
-
-// si je clique sur HOLD le score de current va dans le global
-
-let hold = 0;
-
-function eraseglobalscore(){
+function eraseglobalscore(){  //fonction qui permet de cacher le score précédent dans global
     contexte.fillStyle = '#F6F6F6';
     contexte.fillRect(220, 200, 200, 200);
 };
 
-function drawglobalscore(){ 
+function drawglobalscore(){ // fonction qui permet d'écrire le nouveau score de global
          
     contexte.font = '200 50px Lato';
     contexte.fillStyle = '#dd5151';
     contexte.fillText(hold, 245, 250);
 };
 
-canvas.addEventListener('click', transfertHG);
-
-function transfertHG(endroit3){
-    let x = endroit3.pageX - posGcanvas;
-    let y = endroit3.pageY - posHcanvas;
-    if (x > 570 && x < 660 && y > 470 && y < 500 ){
-    hold = hold + current;
-    current = 0;
-    eraseglobalscore();
-    drawglobalscore();
-    }
-}
-
-// si 1 est tiré dans current alors c'est la variable 2 
-//du score current qui génère de manière aléatoire 
 
 
-// son chiffre en 1 et 6
+// si je clique sur HOLD le score de current va dans le global
+
+
+
+
+
+
 
 
 
