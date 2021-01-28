@@ -1,6 +1,7 @@
 const canvas = document.getElementById('canvas1');
 const contexte = canvas.getContext('2d');
 let rolldice = document.getElementById('rolldice1');
+let holdbutton1 = document.getElementById('holdbutton');
 let posGcanvas = canvas.offsetLeft;
 let posHcanvas = canvas.offsetTop;
 let current = 0;
@@ -158,7 +159,7 @@ rolldice.addEventListener('click', joueur1);
 //---------------------------------------------------JOUEUR 2 -----------------------------------------------------
 
 // fonction qui permet que les cliques aillent au joueur 2
-function joueur2(endroit4){
+function joueur2(){
     rolldice.removeEventListener('click', joueur2);
     erasescore2();
     drawscore2();
@@ -166,7 +167,9 @@ function joueur2(endroit4){
     hasard5 = hasard;
 // si je clique et que c'est 1 qui tombe alors c'est au tour du joueur 1 au prochain clique
     if (hasard5 == 1){
-        hasard4 = 0;
+        current2 = 0;
+        erasescore2();
+        drawscore2();
         rolldice.addEventListener('click', joueur1);
         return;
 
@@ -176,6 +179,9 @@ function joueur2(endroit4){
         
         current2 = current2 + hasard5;
         hasard4 = current2;
+        erasescore2();
+        drawscore2();
+        holdbutton1.addEventListener('click', transfertHold2);
         rolldice.addEventListener('click', joueur2);
         return;
          }
@@ -187,7 +193,7 @@ function joueur2(endroit4){
 }
 //----------------------------------- JOUEUR 1 ----------------------------------------------
 // fonction qui permet que les cliques aillent au joueur 1
-function joueur1(endroit2){
+function joueur1(){
     rolldice.removeEventListener('click', joueur1);
     erasescore();
     drawscore();
@@ -195,7 +201,9 @@ function joueur1(endroit2){
     hasard2 = hasard;
  // si je clique et que c'est 1 qui tombe alors c'est au tour du joueur 2 au prochain clique   
     if (hasard2 == 1){
-        hasard3 = 0;
+        current = 0;
+        erasescore();
+        drawscore();
         rolldice.addEventListener('click', joueur2);
         return;
           }
@@ -205,7 +213,9 @@ function joueur1(endroit2){
         
         current = current + hasard2;
         hasard3 = current;
-        
+        erasescore();
+        drawscore();
+        holdbutton1.addEventListener('click', transfertHold);
         rolldice.addEventListener('click', joueur1);
          }
 
@@ -214,18 +224,21 @@ function joueur1(endroit2){
 
 
 // ---------------------------------- FONCTIONS POUR LE TRANSFERT DE HOLD -------------------------
-canvas.addEventListener('click', transfertHold);
 
-     function transfertHold(endroit3){
-        let x = endroit3.pageX - posGcanvas;
-        let y = endroit3.pageY - posHcanvas;
-        if (x > 570 && x < 660 && y > 470 && y < 500){
-        let mucha = hasard3;
-        hold = (hold + mucha);
-        hasard3 = 0;
+
+     function transfertHold(){
+        
+        if(current2 == 0){
+        hold = hold + hasard3;
+        current = 0;
         eraseglobalscore();
         drawglobalscore();
-       }
+        erasescore();
+        drawscore();
+        holdbutton1.removeEventListener('click', transfertHold);
+        rolldice.removeEventListener('click', joueur1);
+        rolldice.addEventListener('click', joueur2);
+        };
     }
 
     
@@ -245,17 +258,19 @@ function drawglobalscore(){ // fonction qui permet d'écrire le nouveau score de
 // clique sur hold current 2 va dans son global2
 
 
-canvas.addEventListener('click', transfertHold2);
-function transfertHold2(endroit3){
-    let x = endroit3.pageX - posGcanvas;
-    let y = endroit3.pageY - posHcanvas;
-    if (x > 570 && x < 660 && y > 470 && y < 500){
-    let mucha2 = hasard4;
-    hold2 = (hold2 + mucha2);
-    hasard4 = 0;
+
+function transfertHold2(){
+    if(current == 0){
+    hold2 = hold2 + current2;
+    current2 = 0;
     eraseglobalscore2();
     drawglobalscore2();
-   }
+    erasescore2();
+    drawscore2();
+    holdbutton1.removeEventListener('click', transfertHold2);
+    rolldice.removeEventListener('click', joueur2);
+    rolldice.addEventListener('click', joueur1);
+    } 
 }
 
 
