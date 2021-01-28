@@ -1,5 +1,6 @@
 const canvas = document.getElementById('canvas1');
 const contexte = canvas.getContext('2d');
+let rolldice = document.getElementById('rolldice1');
 let posGcanvas = canvas.offsetLeft;
 let posHcanvas = canvas.offsetTop;
 let current = 0;
@@ -121,7 +122,7 @@ contexte.restore();
 
 
 
-canvas.addEventListener('click', joueur1);
+
 
 
 
@@ -153,30 +154,29 @@ function drawscore2(){ // fonction qui écrit dans Current 2
 };
 
 
-canvas.addEventListener('click', joueur1);
-
+rolldice.addEventListener('click', joueur1);
+//---------------------------------------------------JOUEUR 2 -----------------------------------------------------
 
 // fonction qui permet que les cliques aillent au joueur 2
 function joueur2(endroit4){
-    canvas.removeEventListener('click', joueur2);
+    rolldice.removeEventListener('click', joueur2);
     erasescore2();
     drawscore2();
-    let x = endroit4.pageX - posGcanvas;
-    let y = endroit4.pageY - posHcanvas;
     let hasard = Math.floor(Math.random()*6 + 1);
     hasard5 = hasard;
-
-    if (x > 475 && x < 675 && y > 180 && y < 280 && hasard5 == 1){
+// si je clique et que c'est 1 qui tombe alors c'est au tour du joueur 1 au prochain clique
+    if (hasard5 == 1){
         hasard4 = 0;
-        canvas.addEventListener('click', joueur1);
+        rolldice.addEventListener('click', joueur1);
         return;
 
     }
-    else if (x > 475 && x < 675 && y > 180 && y < 280 && (hasard5 == 2 || hasard5 == 3 || hasard5 == 4 || hasard5 == 5 || hasard5 == 6)){
+// sinon si c'est différent de 1 au prochain clique la fonction joueur 2 se relance 
+    else if (hasard5 == 2 || hasard5 == 3 || hasard5 == 4 || hasard5 == 5 || hasard5 == 6){
         
         current2 = current2 + hasard5;
         hasard4 = current2;
-        canvas.addEventListener('click', joueur2);
+        rolldice.addEventListener('click', joueur2);
         return;
          }
 
@@ -185,36 +185,35 @@ function joueur2(endroit4){
     return 0;
 
 }
-
+//----------------------------------- JOUEUR 1 ----------------------------------------------
+// fonction qui permet que les cliques aillent au joueur 1
 function joueur1(endroit2){
-    canvas.removeEventListener('click', joueur1);
+    rolldice.removeEventListener('click', joueur1);
     erasescore();
     drawscore();
-    let x = endroit2.pageX - posGcanvas;
-    let y = endroit2.pageY - posHcanvas;
     let hasard = Math.floor(Math.random()*6 + 1);
     hasard2 = hasard;
-    
+ // si je clique et que c'est 1 qui tombe alors c'est au tour du joueur 2 au prochain clique   
     if (hasard2 == 1){
         hasard3 = 0;
-        canvas.addEventListener('click', joueur2);
+        rolldice.addEventListener('click', joueur2);
         return;
           }
-
-    else if (x > 475 && x < 675 && y > 180 && y < 280 && (hasard2 == 2 || hasard2 == 3 || hasard2 == 4 || hasard2 == 5 || hasard2 == 6)){
+// sinon si c'est différent de 1 au prochain clique la fonction joueur 1 se relance 
+    else if (hasard2 == 2 || hasard2 == 3 || hasard2 == 4 || hasard2 == 5 || hasard2 == 6){
         
         
         current = current + hasard2;
         hasard3 = current;
         
-        canvas.addEventListener('click', joueur1);
+        rolldice.addEventListener('click', joueur1);
          }
 
     else{};
 };
 
 
-
+// ---------------------------------- FONCTIONS POUR LE TRANSFERT DE HOLD -------------------------
 canvas.addEventListener('click', transfertHold);
 
      function transfertHold(endroit3){
