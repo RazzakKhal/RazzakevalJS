@@ -2,6 +2,7 @@ const canvas = document.getElementById('canvas1');
 const contexte = canvas.getContext('2d');
 let rolldice = document.getElementById('rolldice1');
 let holdbutton1 = document.getElementById('holdbutton');
+let newgamebutton = document.getElementById('newgame');
 let posGcanvas = canvas.offsetLeft;
 let posHcanvas = canvas.offsetTop;
 let current = 0;
@@ -110,10 +111,8 @@ contexte.shadowBlur = 20;
 contexte.fillStyle = 'white';
 contexte.fillRect(575, 190, 100, 100);
 
-// création des variables du score current, des variables du 
-// score Global, et de la condition qui permet que lorsque je clique
-// sur le dé, un score aléatoire entre 1 et 6 apparait dans current
-contexte.restore();
+
+contexte.restore();   // restauration de l'ancien etat du canvas
 
 
 
@@ -296,6 +295,7 @@ function joueur1(){
         drawglobalscore();
         erasescore();   //actualise le score de current
         drawscore();
+        endgame();
         holdbutton1.removeEventListener('click', transfertHold);
         rolldice.removeEventListener('click', joueur1);
         rolldice.addEventListener('click', joueur2);
@@ -328,6 +328,7 @@ function transfertHold2(){
     drawglobalscore2();
     erasescore2();          // actualise le currentscore2
     drawscore2();
+    endgame();
     holdbutton1.removeEventListener('click', transfertHold2);
     rolldice.removeEventListener('click', joueur2);
     rolldice.addEventListener('click', joueur1);
@@ -541,11 +542,53 @@ function face0(){
     contexte.fillRect(575, 190, 100, 100);
 };
 
-//------------------------------ NEW GAME ET SOURIS -------------------------------
+
+//------------------------------- CONDITION FIN DE JEU ------------------------------
+function endgame(){
+if(hold >= 100){
+    alert('FIN DE PARTIE : FELICITATIONS AU JOUEUR 1');
+    hold = 0;
+    hold2 = 0;
+    current = 0;
+    current2 = 0;
+    erasetour2();
+    erasetour1();
+    eraseglobalscore();
+    eraseglobalscore2();
+    erasescore();
+    erasescore2();
+    face0();
+}
+else if(hold2 >= 100){
+    alert('FIN DE PARTIE : FELICITATIONS AU JOUEUR 2');
+    hold = 0;
+    hold2 = 0;
+    current = 0;
+    current2 = 0;
+    erasetour2();
+    erasetour1();
+    eraseglobalscore();
+    eraseglobalscore2();
+    erasescore();
+    erasescore2();
+    face0();
+}
+else{
+    alert('NOUVELLE PARTIE : JOUEUR1 CLIQUE SUR ROLLDICE');
+    hold = 0;
+    hold2 = 0;
+    current = 0;
+    current2 = 0;
+    erasetour2();
+    erasetour1();
+    eraseglobalscore();
+    eraseglobalscore2();
+    erasescore();
+    erasescore2();
+    face0();
+};
+};
+
+newgamebutton.addEventListener('click', endgame);
 
 
-// New game reinitialise tout
-
-// Si je suis au dessus d'une zone de clique la souris se transforme
-
-// si global sscore 1 ou global score 2 = 100 alors alert fin du jeu et tout redeviens à 0

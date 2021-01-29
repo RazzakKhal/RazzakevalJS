@@ -3,19 +3,27 @@ body{
 }
 #rolldice1{
   width: 120px;
-  height: 50px;
-  border: 2px solid black;
+  height: 40px;
   position:absolute;
   left:570px;
   top: 400px;
+  cursor: pointer;
 }
 #holdbutton{
   width: 120px;
   height: 40px;
-  border: 2px solid black;
   position:absolute;
   left:580px;
   top: 470px;
+  cursor : pointer;
+}
+#newgame{
+  width : 130px;
+  height : 40px;
+  position : absolute;
+  left : 570px;
+  top : 40px;
+  cursor : pointer;
 }
 #canvas1{
     z-index:2;
