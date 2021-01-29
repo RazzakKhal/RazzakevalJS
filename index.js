@@ -51,10 +51,6 @@ contexte.font = '300 11px Lato';
 contexte.fillStyle = 'black';
 contexte.fillText('CURRENT', 923, 442);
 
-
-// fonction pour alert si je touche New Game
-
-
 // création des signes  de new game, roll dice, et hold
 
 contexte.beginPath();
@@ -124,7 +120,7 @@ contexte.restore();
 
 
 
-
+//---------------------------- ECRIS ET EFFACE LES SCORES DE CURRENT ----------------------------
 
 
 function erasescore(){   // qui permet que le score ne se superpose pas
@@ -155,16 +151,50 @@ function drawscore2(){ // fonction qui écrit dans Current 2
 };
 
 
+
+
 rolldice.addEventListener('click', joueur1);
 //---------------------------------------------------JOUEUR 2 -----------------------------------------------------
 
 // fonction qui permet que les cliques aillent au joueur 2
 function joueur2(){
     rolldice.removeEventListener('click', joueur2);
+    tour2();
+    erasetour1();
     erasescore2();
     drawscore2();
     let hasard = Math.floor(Math.random()*6 + 1);
     hasard5 = hasard;
+
+// condition pour mettre en concordance l'apparence du dé avec hasard
+
+     if(hasard == 1){
+        face0();
+        face1();
+        erasetour2();
+        tour1();
+    }
+    else if(hasard == 2){
+        face0();
+        face2();
+    }
+    else if(hasard == 3){
+        face0();
+        face3();
+    }
+    else if(hasard == 4){
+        face0();
+        face4();
+    }
+    else if(hasard == 5){
+        face0();
+        face5();
+    }
+    else{
+        face0();
+        face6();
+    }
+
 // si je clique et que c'est 1 qui tombe alors c'est au tour du joueur 1 au prochain clique
     if (hasard5 == 1){
         current2 = 0;
@@ -195,10 +225,41 @@ function joueur2(){
 // fonction qui permet que les cliques aillent au joueur 1
 function joueur1(){
     rolldice.removeEventListener('click', joueur1);
+    tour1();
+    erasetour2();
     erasescore();
     drawscore();
     let hasard = Math.floor(Math.random()*6 + 1);
     hasard2 = hasard;
+
+ // condition pour mettre en concordance l'apparence du dé avec hasard
+
+    if(hasard == 1){
+        face0();
+        face1();
+        erasetour1();
+        tour2();
+    }
+    else if(hasard == 2){
+        face0();
+        face2();
+    }
+    else if(hasard == 3){
+        face0();
+        face3();
+    }
+    else if(hasard == 4){
+        face0();
+        face4();
+    }
+    else if(hasard == 5){
+        face0();
+        face5();
+    }
+    else{
+        face0();
+        face6();
+    }
  // si je clique et que c'est 1 qui tombe alors c'est au tour du joueur 2 au prochain clique   
     if (hasard2 == 1){
         current = 0;
@@ -231,9 +292,9 @@ function joueur1(){
         if(current2 == 0){
         hold = hold + hasard3;
         current = 0;
-        eraseglobalscore();
+        eraseglobalscore();  // actualise le globalscore
         drawglobalscore();
-        erasescore();
+        erasescore();   //actualise le score de current
         drawscore();
         holdbutton1.removeEventListener('click', transfertHold);
         rolldice.removeEventListener('click', joueur1);
@@ -263,9 +324,9 @@ function transfertHold2(){
     if(current == 0){
     hold2 = hold2 + current2;
     current2 = 0;
-    eraseglobalscore2();
+    eraseglobalscore2();    // actualise le globalscore2
     drawglobalscore2();
-    erasescore2();
+    erasescore2();          // actualise le currentscore2
     drawscore2();
     holdbutton1.removeEventListener('click', transfertHold2);
     rolldice.removeEventListener('click', joueur2);
@@ -286,13 +347,205 @@ contexte.fillStyle = '#dd5151';
 contexte.fillText(hold2, 945, 250);
 };
 
+//-------------------------- PETITS CERCLE TOUR 1 ET 2 -------------------------
 
-// si global sscore 1 ou global score 2 = 100 alors alert fin du jeu et tout redeviens à 0
+//si player 1 joue, cercle à coté de son nom
+function tour1(){
+   contexte.beginPath();
+   contexte.lineWidth = '5';
+   contexte.fillStyle = '#dd5151';
+   contexte.arc(380, 140, 6, 0, 2*Math.PI);
+   contexte.fill();
+};
+// fonction qui permet d'effacer le cercle du tour 1
+function erasetour1(){
+    contexte.beginPath();
+    contexte.lineWidth = '5';
+    contexte.fillStyle = '#F6F6F6';
+    contexte.arc(380, 140, 8, 0, 2*Math.PI);
+    contexte.fill();
+ };
 
-// si hasard = 1 alors dé a un cercle, si hasard = 2 alors dé à 2 cercles ...
 
-//si player 1 joue, cercle à coté de son nom, idem pour player 2
+//si player 2 joue, cercle à coté de son nom
+function tour2(){
+   contexte.beginPath();
+   contexte.lineWidth = '5';
+   contexte.fillStyle = '#dd5151';
+   contexte.arc(850, 140, 6, 0, 2*Math.PI);
+   contexte.fill();
+};
+
+//fonction qui permet d'effacer le cercle au tour 2
+function erasetour2(){
+    contexte.beginPath();
+    contexte.lineWidth = '5';
+    contexte.fillStyle = '#FFF';
+    contexte.arc(850, 140, 8, 0, 2*Math.PI);
+    contexte.fill();
+ };
+
+
+//-------------------------------------- DESSIN DE CHAQUE FACE DU DE -----------------------------------
+
+// FACE 1
+function face1(){
+   contexte.beginPath();
+   contexte.lineWidth = '5';
+   contexte.fillStyle = '#dd5151';
+   contexte.arc(625, 240, 6, 0, 2*Math.PI);
+   contexte.fill();
+};
+
+
+// FACE 2
+function face2(){
+contexte.beginPath();
+contexte.lineWidth = '5';
+contexte.fillStyle = '#dd5151';
+contexte.arc(590, 275, 6, 0, 2*Math.PI);
+contexte.fill();
+
+
+contexte.beginPath();
+contexte.lineWidth = '5';
+contexte.fillStyle = '#dd5151';
+contexte.arc(660, 205, 6, 0, 2*Math.PI);
+contexte.fill();
+};
+
+// FACE 3
+function face3(){
+contexte.beginPath();
+contexte.lineWidth = '5';
+contexte.fillStyle = '#dd5151';
+contexte.arc(625, 240, 6, 0, 2*Math.PI);
+contexte.fill();
+
+
+contexte.beginPath();
+contexte.lineWidth = '5';
+contexte.fillStyle = '#dd5151';
+contexte.arc(590, 275, 6, 0, 2*Math.PI);
+contexte.fill();
+
+contexte.beginPath();
+contexte.lineWidth = '5';
+contexte.fillStyle = '#dd5151';
+contexte.arc(660, 205, 6, 0, 2*Math.PI);
+contexte.fill();
+};
+
+// FACE 4
+function face4(){
+   contexte.beginPath();
+   contexte.lineWidth = '5';
+   contexte.fillStyle = '#dd5151';
+   contexte.arc(590, 275, 6, 0, 2*Math.PI);
+   contexte.fill();
+
+   contexte.beginPath();
+   contexte.lineWidth = '5';
+   contexte.fillStyle = '#dd5151';
+   contexte.arc(660, 205, 6, 0, 2*Math.PI);
+   contexte.fill();
+
+   contexte.beginPath();
+   contexte.lineWidth = '5';
+   contexte.fillStyle = '#dd5151';
+   contexte.arc(660, 275, 6, 0, 2*Math.PI);
+   contexte.fill();
+
+   contexte.beginPath();
+   contexte.lineWidth = '5';
+   contexte.fillStyle = '#dd5151';
+   contexte.arc(590, 205, 6, 0, 2*Math.PI);
+   contexte.fill();
+};
+
+// FACE 5
+function face5(){
+    contexte.beginPath();
+    contexte.lineWidth = '5';
+    contexte.fillStyle = '#dd5151';
+    contexte.arc(590, 275, 6, 0, 2*Math.PI);
+    contexte.fill();
+ 
+    contexte.beginPath();
+    contexte.lineWidth = '5';
+    contexte.fillStyle = '#dd5151';
+    contexte.arc(660, 205, 6, 0, 2*Math.PI);
+    contexte.fill();
+ 
+    contexte.beginPath();
+    contexte.lineWidth = '5';
+    contexte.fillStyle = '#dd5151';
+    contexte.arc(660, 275, 6, 0, 2*Math.PI);
+    contexte.fill();
+ 
+    contexte.beginPath();
+    contexte.lineWidth = '5';
+    contexte.fillStyle = '#dd5151';
+    contexte.arc(590, 205, 6, 0, 2*Math.PI);
+    contexte.fill();
+
+    contexte.beginPath();
+    contexte.lineWidth = '5';
+    contexte.fillStyle = '#dd5151';
+    contexte.arc(625, 240, 6, 0, 2*Math.PI);
+    contexte.fill();
+ };
+
+ // FACE 6
+function face6(){
+    contexte.beginPath();
+    contexte.lineWidth = '5';
+    contexte.fillStyle = '#dd5151';
+    contexte.arc(590, 275, 6, 0, 2*Math.PI);
+    contexte.fill();
+
+    contexte.beginPath();
+    contexte.lineWidth = '5';
+    contexte.fillStyle = '#dd5151';
+    contexte.arc(590, 240, 6, 0, 2*Math.PI);
+    contexte.fill();
+ 
+    contexte.beginPath();
+    contexte.lineWidth = '5';
+    contexte.fillStyle = '#dd5151';
+    contexte.arc(660, 205, 6, 0, 2*Math.PI);
+    contexte.fill();
+
+    contexte.beginPath();
+    contexte.lineWidth = '5';
+    contexte.fillStyle = '#dd5151';
+    contexte.arc(660, 240, 6, 0, 2*Math.PI);
+    contexte.fill();
+ 
+    contexte.beginPath();
+    contexte.lineWidth = '5';
+    contexte.fillStyle = '#dd5151';
+    contexte.arc(660, 275, 6, 0, 2*Math.PI);
+    contexte.fill();
+ 
+    contexte.beginPath();
+    contexte.lineWidth = '5';
+    contexte.fillStyle = '#dd5151';
+    contexte.arc(590, 205, 6, 0, 2*Math.PI);
+    contexte.fill();
+};
+
+// RESET DU CARRE
+function face0(){
+    contexte.fillStyle = 'white';
+    contexte.fillRect(575, 190, 100, 100);
+};
+
+//------------------------------ NEW GAME ET SOURIS -------------------------------
+
 
 // New game reinitialise tout
 
 // Si je suis au dessus d'une zone de clique la souris se transforme
+
+// si global sscore 1 ou global score 2 = 100 alors alert fin du jeu et tout redeviens à 0
