@@ -21,23 +21,6 @@ contexte.fillRect(0,0,625,570);
 contexte.fillStyle = '#FFF';
 contexte.fillRect(625,0,625,570);
 
-// ajout des textes player 1, player 2, New game, Roll Dice, Hold
-
-contexte.font = '30px Lato';
-contexte.fillStyle = 'black';
-contexte.fillText('PLAYER 1', 220, 150);
-contexte.font = '150 30px Lato';
-contexte.fillStyle = 'black';
-contexte.fillText('PLAYER 2', 880, 150);
-contexte.font = '300 15px Lato';
-contexte.fillStyle = 'black';
-contexte.fillText('NEW GAME', 600, 60);
-contexte.font = '300 15px Lato';
-contexte.fillStyle = 'black';
-contexte.fillText('ROLL DICE', 600, 420);
-contexte.font = '300 15px Lato';
-contexte.fillStyle = 'black';
-contexte.fillText('HOLD', 613, 490);
 
 // ajout des carrés contenants les scores CURRENT ainsi que des textes Current
 
@@ -45,10 +28,10 @@ contexte.fillStyle = '#dd5151'
 contexte.fillRect(240, 420, 100, 70);
 contexte.fillStyle = '#dd5151'
 contexte.fillRect(900, 420, 100, 70);
-contexte.font = '300 11px Lato';
+contexte.font = '300 11px Lato-Light';
 contexte.fillStyle = 'black';
 contexte.fillText('CURRENT', 263, 442);
-contexte.font = '300 11px Lato';
+contexte.font = '300 11px Lato-Light';
 contexte.fillStyle = 'black';
 contexte.fillText('CURRENT', 923, 442);
 
@@ -125,13 +108,13 @@ contexte.restore();   // restauration de l'ancien etat du canvas
 function erasescore(){   // qui permet que le score ne se superpose pas
     contexte.fillStyle = '#dd5151'
     contexte.fillRect(240, 420, 100, 70);
-    contexte.font = '300 11px Lato';
+    contexte.font = '300 11px Lato-Light';
     contexte.fillStyle = 'black';
     contexte.fillText('CURRENT', 263, 442);
 };
 
 function drawscore(){       // fonction qui écrit dans Current 1
-    contexte.font = '25px Lato';
+    contexte.font = '25px Lato-Light';
     contexte.fillStyle = 'white';
     contexte.fillText(current, 275, 475);
 };
@@ -139,12 +122,12 @@ function drawscore(){       // fonction qui écrit dans Current 1
 function erasescore2(){   // qui permet que le score ne se superpose pas
     contexte.fillStyle = '#dd5151'
     contexte.fillRect(900, 420, 100, 70);
-    contexte.font = '300 11px Lato';
+    contexte.font = '300 11px Lato-Light';
     contexte.fillStyle = 'black';
     contexte.fillText('CURRENT', 923, 442);
 };
 function drawscore2(){ // fonction qui écrit dans Current 2
-    contexte.font = '25px Lato';
+    contexte.font = '25px Lato-Light';
     contexte.fillStyle = 'black';
     contexte.fillText(current2, 935, 475);
 };
@@ -312,7 +295,7 @@ function eraseglobalscore(){  //fonction qui permet de cacher le score précéde
 
 function drawglobalscore(){ // fonction qui permet d'écrire le nouveau score de global
          
-    contexte.font = '200 50px Lato';
+    contexte.font = '200 50px Lato-Light';
     contexte.fillStyle = '#dd5151';
     contexte.fillText(hold, 245, 250);
 };
@@ -347,7 +330,7 @@ contexte.fillRect(920, 200, 200, 200);
 
 function drawglobalscore2(){ // fonction qui permet d'écrire le nouveau score de global2
      
-contexte.font = '200 50px Lato';
+contexte.font = '200 50px Lato-Light';
 contexte.fillStyle = '#dd5151';
 contexte.fillText(hold2, 945, 250);
 };

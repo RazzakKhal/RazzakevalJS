@@ -1,29 +1,53 @@
-body{
-  background-image: url('images/fond.png');
+@font-face { 	font-family: "Lato-Light"; 	src: url('Lato-Light.ttf'); }
+@font-face { 	font-family: "Lato-Bold"; 	src: url('Lato-Bold.ttf'); }
+
+
+:root {
+    --ion-background-color: #F27D57;
+  
 }
+
 #rolldice1{
   width: 120px;
   height: 40px;
   position:absolute;
-  left:570px;
-  top: 400px;
+  left:593px;
+  top: 420px;
   cursor: pointer;
+  user-select: none;
 }
 #holdbutton{
   width: 120px;
   height: 40px;
   position:absolute;
-  left:580px;
-  top: 470px;
+  left:605px;
+  top: 493px;
   cursor : pointer;
+  user-select: none;
 }
 #newgame{
   width : 130px;
   height : 40px;
   position : absolute;
-  left : 570px;
-  top : 40px;
+  left : 593px;
+  top : 60px;
   cursor : pointer;
+  user-select: none;
+}
+#player1{
+  position : absolute;
+  left : 230px;
+  top : 110px;
+  font-size: 30px;
+  
+}
+#player2{
+  position : absolute;
+  left : 900px;
+  top : 110px;
+  font-size: 30px;
+  font-family: 'Lato-Light';
+
 }
 #canvas1{
     z-index:2;
