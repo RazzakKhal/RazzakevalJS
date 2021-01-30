@@ -153,6 +153,67 @@ function drawscore2(){ // fonction qui écrit dans Current 2
 
 
 rolldice.addEventListener('click', joueur1);
+//----------------------------------- JOUEUR 1 ----------------------------------------------
+// fonction qui permet que les cliques aillent au joueur 1
+function joueur1(){
+    rolldice.removeEventListener('click', joueur1);
+    tour1();
+    erasetour2();
+    erasescore();
+    drawscore();
+    let hasard = Math.floor(Math.random()*6 + 1);
+    hasard2 = hasard;
+
+ // condition pour mettre en concordance l'apparence du dé avec hasard
+
+    if(hasard == 1){
+        face0();
+        face1();
+        erasetour1();
+        tour2();
+    }
+    else if(hasard == 2){
+        face0();
+        face2();
+    }
+    else if(hasard == 3){
+        face0();
+        face3();
+    }
+    else if(hasard == 4){
+        face0();
+        face4();
+    }
+    else if(hasard == 5){
+        face0();
+        face5();
+    }
+    else{
+        face0();
+        face6();
+    }
+ // si je clique et que c'est 1 qui tombe alors c'est au tour du joueur 2 au prochain clique   
+    if (hasard2 == 1){
+        current = 0;
+        erasescore();
+        drawscore();
+        rolldice.addEventListener('click', joueur2);
+        return;
+          }
+// sinon si c'est différent de 1 au prochain clique la fonction joueur 1 se relance 
+    else if (hasard2 == 2 || hasard2 == 3 || hasard2 == 4 || hasard2 == 5 || hasard2 == 6){
+        
+        
+        current = current + hasard2;
+        hasard3 = current;
+        erasescore();
+        drawscore();
+        holdbutton1.addEventListener('click', transfertHold);
+        rolldice.addEventListener('click', joueur1);
+         }
+
+    else{};
+};
 //---------------------------------------------------JOUEUR 2 -----------------------------------------------------
 
 // fonction qui permet que les cliques aillent au joueur 2
@@ -220,67 +281,6 @@ function joueur2(){
     return 0;
 
 }
-//----------------------------------- JOUEUR 1 ----------------------------------------------
-// fonction qui permet que les cliques aillent au joueur 1
-function joueur1(){
-    rolldice.removeEventListener('click', joueur1);
-    tour1();
-    erasetour2();
-    erasescore();
-    drawscore();
-    let hasard = Math.floor(Math.random()*6 + 1);
-    hasard2 = hasard;
-
- // condition pour mettre en concordance l'apparence du dé avec hasard
-
-    if(hasard == 1){
-        face0();
-        face1();
-        erasetour1();
-        tour2();
-    }
-    else if(hasard == 2){
-        face0();
-        face2();
-    }
-    else if(hasard == 3){
-        face0();
-        face3();
-    }
-    else if(hasard == 4){
-        face0();
-        face4();
-    }
-    else if(hasard == 5){
-        face0();
-        face5();
-    }
-    else{
-        face0();
-        face6();
-    }
- // si je clique et que c'est 1 qui tombe alors c'est au tour du joueur 2 au prochain clique   
-    if (hasard2 == 1){
-        current = 0;
-        erasescore();
-        drawscore();
-        rolldice.addEventListener('click', joueur2);
-        return;
-          }
-// sinon si c'est différent de 1 au prochain clique la fonction joueur 1 se relance 
-    else if (hasard2 == 2 || hasard2 == 3 || hasard2 == 4 || hasard2 == 5 || hasard2 == 6){
-        
-        
-        current = current + hasard2;
-        hasard3 = current;
-        erasescore();
-        drawscore();
-        holdbutton1.addEventListener('click', transfertHold);
-        rolldice.addEventListener('click', joueur1);
-         }
-
-    else{};
-};
 
 
 // ---------------------------------- FONCTIONS POUR LE TRANSFERT DE HOLD -------------------------
@@ -295,6 +295,8 @@ function joueur1(){
         drawglobalscore();
         erasescore();   //actualise le score de current
         drawscore();
+        erasetour1();
+        tour2();
         endgame();
         holdbutton1.removeEventListener('click', transfertHold);
         rolldice.removeEventListener('click', joueur1);
@@ -328,6 +330,8 @@ function transfertHold2(){
     drawglobalscore2();
     erasescore2();          // actualise le currentscore2
     drawscore2();
+    erasetour2();
+    tour1();
     endgame();
     holdbutton1.removeEventListener('click', transfertHold2);
     rolldice.removeEventListener('click', joueur2);
@@ -574,7 +578,17 @@ else if(hold2 >= 100){
     face0();
 }
 else{
-    alert('NOUVELLE PARTIE : JOUEUR1 CLIQUE SUR ROLLDICE');
+    
+};
+};
+
+
+//----------------------------- NEW GAME ----------------------------
+
+newgamebutton.addEventListener('click', newgame);
+
+function newgame(){
+    alert('NOUVELLE PARTIE: JOUEUR 1 COMMENCE, CLIQUE SUR ROLLDICE ');
     hold = 0;
     hold2 = 0;
     current = 0;
@@ -586,9 +600,12 @@ else{
     erasescore();
     erasescore2();
     face0();
-};
-};
+    rolldice.removeEventListener('click', joueur2);
+    rolldice.addEventListener('click', joueur1);
+    
+}
 
-newgamebutton.addEventListener('click', endgame);
+
+
 
 
